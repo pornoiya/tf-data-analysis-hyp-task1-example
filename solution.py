@@ -12,7 +12,7 @@ def solution(x_success: int,
     # Измените код этой функции
     # Это будет вашим решением
     # Не меняйте название функции и её аргументы
-        alpha = 0.06
+    alpha = 0.06
     p1 = x_success / x_cnt
     p2 = y_success / y_cnt
     p = (x_success + y_success) / (x_cnt + y_cnt)
