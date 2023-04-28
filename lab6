@@ -1,0 +1,67 @@
+N = 17
+a, b = 0, 5
+def right_func(x):
+    return np.exp(x) + 2*np.exp(-x) - 2.6 * x ** 3 + 2.6 * x ** 2 - 15.6 * x
+def shooting(steps): m=a
+n=0 while True:
+        x, y, z = Euler(m, steps)[-1]
+        u = z - math.exp(5) + 2*math.exp(-5) + 184.6
+        v = EulerKoshi(m, steps)
+        next_m = m - u / v
+        n += 1
+        if abs(next_m - m) < 1e-12:
+            m = next_m
+            print(m)
+            print(f"Итераций для метода Ньютона (кол-во шагов = {steps}): ", n)
+            break
+        m = next_m
+    return Euler(m, steps)
+def Euler(m, steps):
+    h = (b - a) / steps x=a
+    y=3
+    z=m
+    k=h/2
+    values = [[x, y, z]] for i in range(steps):
+            next_x = x + h
+            y_1 = y + h *z
+            z_1 = z + h*(y + 5.2+2.6*(x**2)*(x-1))
+            next_z = z + h/2*(y + y_1 + 10.4+2.6*(x**2*(x-1)+next_x**2*(next_x-1)))
+            next_y = y + k * (z + z_1)
+            x, y, z = next_x, next_y, next_z
+            values.append([x, y, z])
+        return values
+    
+def EulerKoshi(m, steps): h = (b - a) / steps x=a
+u=0
+z=1
+k=h/2
+for i in range(steps):
+        next_x = x + h
+        z_1 = z + h*u
+        u_1 = u + h*z
+        next_u = u + k*(z + z_1)
+        next_z = z + k * (u + u_1)
+        x, u, z = next_x, next_u, next_z
+return z
+
+def calculate_method(method, n):
+    points = [(0, 0)]
+    a, b = 0, 1
+    h = (b - a) / n
+    for i in range(1, n + 1):
+        step = h * i
+        x, y = points[i - 1]
+        points.append((step, method(x, y, h)))
+    return points
+    x = np.arange(a, b, 0.01)
+    plt.figure(figsize=(10, 10))
+    plt.plot(x, right_func(x), label=r'$Точное решение$')
+    xs, ys, zs = zip(*shooting(10))
+    plt.plot(xs, ys, label=fr'$Кол-во шагов: 10$')
+    xs, ys, zs = zip(*shooting(50))
+    plt.plot(xs, ys, label=fr'$Кол-во шагов: 50')
+    plt.xlabel(r'$x$', fontsize=7)
+    plt.ylabel(r'$f(x)$', fontsize=7)
+    plt.grid(True)
+    plt.legend(loc='best', fontsize=7)
+    plt.show()
